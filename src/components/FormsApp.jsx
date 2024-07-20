@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useForm } from '../hooks/useForm';
-
 
 export const FormsApp = () => {
     const initialForm = {
@@ -10,12 +9,18 @@ export const FormsApp = () => {
         password: ''
     };
 
-    const { formState, onInputChange } = useForm(); // Desestructura las propiedades del hook
+    const { formState, onInputChange } = useForm(initialForm);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(formState);
     };
+
+    const focusRef = useRef();
+
+    useEffect(() => {
+        focusRef.current.focus();
+    }, []);
 
     return (
         <>
@@ -27,7 +32,7 @@ export const FormsApp = () => {
                         className="form-control" 
                         id="userName" 
                         name='username'
-                        value={formState.username} // Utiliza formState.username en lugar de username
+                        value={formState.username}
                         onChange={onInputChange}
                     />
                 </div>
@@ -39,7 +44,7 @@ export const FormsApp = () => {
                         className="form-control" 
                         id="nickName" 
                         name='nickName'
-                        value={formState.nickName} // Utiliza formState.nickName en lugar de nickName
+                        value={formState.nickName}
                         onChange={onInputChange}
                     />
                 </div>
@@ -51,7 +56,7 @@ export const FormsApp = () => {
                         className="form-control" 
                         id="email" 
                         name='email'
-                        value={formState.email} // Utiliza formState.email en lugar de email
+                        value={formState.email}
                         onChange={onInputChange}
                     />
                 </div>
@@ -59,11 +64,12 @@ export const FormsApp = () => {
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label">Password</label>
                     <input 
+                    ref={focusRef}
                         type="password" 
                         className="form-control" 
                         id="password" 
                         name='password'
-                        value={formState.password} // Utiliza formState.password en lugar de password
+                        value={formState.password}
                         onChange={onInputChange}
                     />
                 </div>
